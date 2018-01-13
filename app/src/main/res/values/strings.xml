@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MBTA Scavenger</string>
+    <string name="score">Your Current Score: is %1$d out of %2$d</string>
+    <string name="locate">Locate</string>
+    <string name="history">History</string>
+    <string name="kilometer">Kilometers</string>
+    <string name="miles">Miles</string>
+    <string name="closest_station">Closest Station</string>
+    <string name="map">Map</string>
+    <string name="register">Register Station</string>
+    <string name="gloat">Gloat</string>
+    <string name="distance_pref">Distances in</string>
+    <string name="text_title">MBTA Scavenger</string>
+    <string name="text_content">Hey, Look what my score is, I have visited %1$d out of %2$d train stations in boston.</string>
+    <string name="send_report">Send crime report via</string>
+    <string name="station_image">Station Image, click to take picture.</string>
+    <string name="back">Back</string>
+</resources>
