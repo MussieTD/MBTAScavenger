@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,42 +26,34 @@ import java.util.List;
 
 public class MbtaScavenger extends Fragment {
 
-    public static MbtaScavenger newInstance()
-    {
+    public static MbtaScavenger newInstance() {
         return new MbtaScavenger();
     }
 
-   /* @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-
-    }
-*/
-   private static final String PREF_DISTANCE_UNIT = "userDistanceUnitPref";
-   private RadioButton kmPref;
-   private RadioButton milePref;
+    private static final String PREF_DISTANCE_UNIT = "userDistanceUnitPref";
+    private RadioButton kmPref;
+    private RadioButton milePref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.front_page_fragment, container, false);
-        ImageView banner = (ImageView) v.findViewById(R.id.imageView);
-        TextView scoreTv = (TextView) v.findViewById(R.id.score_textView);
+       // setting up view
+        ImageView banner = v.findViewById(R.id.imageView);
+        TextView scoreTv = v.findViewById(R.id.score_textView);
 
-        Button locateBtn = (Button) v.findViewById(R.id.locate_btn);
-      /*  Button historyBtn = (Button) v.findViewById(R.id.history_btn);*/
-        Button mapBtn = (Button) v.findViewById(R.id.map_btn);
-        Button gloatBtn = (Button) v.findViewById(R.id.gloat_btn);
+        Button locateBtn = v.findViewById(R.id.locate_btn);
+        Button mapBtn = v.findViewById(R.id.map_btn);
+        Button gloatBtn = v.findViewById(R.id.gloat_btn);
 
-         kmPref = (RadioButton) v.findViewById(R.id.km_radio_btn);
-         milePref = (RadioButton) v.findViewById(R.id.miles_radio_btn);
+        kmPref = v.findViewById(R.id.km_radio_btn);
+        milePref = v.findViewById(R.id.miles_radio_btn);
 
-         kmPref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-             @Override
-             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                 onRadioButtonClicked(kmPref);
-             }
-         });
+        kmPref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                onRadioButtonClicked(kmPref);
+            }
+        });
         milePref.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -70,19 +61,21 @@ public class MbtaScavenger extends Fragment {
             }
         });
 
+        // saving prefrences for Kilometers or miles
         if (getStoredPrefrence_prefKM(getContext()))
             kmPref.setChecked(true);
         else
             milePref.setChecked(true);
-        Log.i("pref manager","checking " +getStoredPrefrence_prefKM(getContext()));
+        Log.i("pref manager", "checking " + getStoredPrefrence_prefKM(getContext()));
 
-        final StationsLab stationsLab = StationsLab.get(getActivity());
-        final List<Station> myStations = stationsLab.getStations();
-        String x = getString(R.string.score,stationsLab.getNumberOfVisited(),myStations.size());
-        Log.i("visited locs: ",x);
+        final StationsLab stationsLab = StationsLab.get(getActivity()); // getting singleton  from database
+        final List<Station> myStations = stationsLab.getStations(); // getting list of stations
+        String x = getString(R.string.score, stationsLab.getNumberOfVisited(), myStations.size());
+        Log.i("visited locs: ", x);
         scoreTv.setText(x);
 
 
+        // goes to static map image, maybe actual map in the future
         mapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,16 +88,17 @@ public class MbtaScavenger extends Fragment {
             }
         });
 
+        // starts StationFoundActivity
         locateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent locateIntent = new Intent(getActivity(),StationFoundActivity.class);
+                Intent locateIntent = new Intent(getActivity(), StationFoundActivity.class);
                 startActivity(locateIntent);
             }
         });
 
 
-
+        // allows the user to send current score to friends or family
         gloatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,7 +111,7 @@ public class MbtaScavenger extends Fragment {
                             .setSubject(getString(R.string.text_title))
                             .setChooserTitle(R.string.send_report)
                             .setType("text/plain")
-                            .setText(getString(R.string.text_content,stationsLab.getNumberOfVisited(),myStations.size()))
+                            .setText(getString(R.string.text_content, stationsLab.getNumberOfVisited(), myStations.size()))
                             .getIntent();
 
                     if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -143,23 +137,21 @@ public class MbtaScavenger extends Fragment {
         switch (view.getId()) {
             case R.id.km_radio_btn:
                 if (checked)
-                setStoredQuery_prefKm(getContext(),true);
+                    setStoredQuery_prefKm(getContext(), true);
                 break;
             case R.id.miles_radio_btn:
                 if (checked)
-                setStoredQuery_prefKm(getContext(),false);
+                    setStoredQuery_prefKm(getContext(), false);
                 break;
         }
-        Log.i("radioButtons"," in here");
+
 
 
     }
 
     public static boolean getStoredPrefrence_prefKM(Context context) {
-
-
         return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(PREF_DISTANCE_UNIT, true);
+                .getBoolean(PREF_DISTANCE_UNIT, true); // default preference is Km
 
     }
 
@@ -168,9 +160,7 @@ public class MbtaScavenger extends Fragment {
                 .edit() // after here you add many changes and then apply
                 .putBoolean(PREF_DISTANCE_UNIT, prefKM)
                 .apply();
-        Log.i("pref manager","settin query "+ prefKM);
+        Log.i("pref manager", "setting query " + prefKM);
     }
-
-
 
 }

@@ -11,14 +11,15 @@ import android.graphics.Point;
 
 public class PictureUtils {
 
+
     public static Bitmap getScaledBitmap(String path, int destWidth, int destHeight) {
-// Read in the dimensions of the image on disk
+        // Read in the dimensions of the image on disk
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(path, options);
         float srcWidth = options.outWidth;
         float srcHeight = options.outHeight;
-// Figure out how much to scale down by
+        // Figure out how much to scale down by
         int inSampleSize = 1;
         if (srcHeight > destHeight || srcWidth > destWidth) {
             if (srcWidth > srcHeight) {
@@ -35,6 +36,7 @@ public class PictureUtils {
         return BitmapFactory.decodeFile(path, options);
     }
 
+    // used to display the image that the user took as a bitmap in the imageview
     public static Bitmap getScaledBitmap(String path, Activity activity) {
         Point size = new Point();
         activity.getWindowManager().getDefaultDisplay()

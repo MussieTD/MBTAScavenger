@@ -4,6 +4,7 @@ package edu.bhcc.mussie.mbtascavenger;
  * Created by Mussie on 12/2/2017.
  */
 
+// This class defines a station and it properties and behaviours
 public class Station {
 
 
@@ -11,13 +12,13 @@ public class Station {
     String location;
     boolean visited;
 
-public Station(String mName, String mLocation, boolean mVisited)
-{
-    name = mName;
-    location = mLocation;
-    visited = mVisited;
+    public Station(String mName, String mLocation, boolean mVisited) {
+        name = mName;
+        location = mLocation;
+        visited = mVisited;
 
-}
+    }
+
     public String getName() {
         return name;
     }
@@ -44,6 +45,6 @@ public Station(String mName, String mLocation, boolean mVisited)
 
     public String getPhotoFilename() {
         return "IMG_" + getName() + ".jpg";
-    }
+    } // format in which station image files are saved
 
 }

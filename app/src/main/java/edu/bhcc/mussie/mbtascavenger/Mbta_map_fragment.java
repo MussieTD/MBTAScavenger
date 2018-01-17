@@ -1,12 +1,10 @@
 package edu.bhcc.mussie.mbtascavenger;
 
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,29 +18,31 @@ import android.widget.ImageView;
 public class Mbta_map_fragment extends Fragment {
 
 
-    public static MbtaScavenger newInstance()
-    {
+    public static MbtaScavenger newInstance() {
         return new MbtaScavenger();
     }
-public Button backBtn;
+
+    public Button backBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        Log.i("here","");
+
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.mbta_map, container, false);
-        ImageView mapIv = (ImageView) v.findViewById(R.id.map_imageView);
-        mapIv.setImageResource(R.drawable.mbta_transit_map);
+        ImageView mapIv = v.findViewById(R.id.map_imageView);
+        mapIv.setImageResource(R.drawable.mbta_transit_map); // setting image
 
-        backBtn = (Button) v.findViewById(R.id.back_btn);
+        backBtn = v.findViewById(R.id.back_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                // fragment for map
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 MbtaScavenger llf = new MbtaScavenger();
@@ -50,8 +50,6 @@ public Button backBtn;
                 ft.commit();
             }
         });
-
-        Log.i("here","at");
 
 
         return v;
